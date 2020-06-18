@@ -46,10 +46,21 @@
                             <img src="img/americano.png" alt="Американо">
                         </div>
                     </div>
+                    <div class="col-6"><!-- Баланс, АТМ, Сдача -->
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control balance" placeholder="Баланс">
+                      <div class="input-group-append">
+                        <span class="input-group-text rub">i</span>
+                      </div>
+                    </div>
+                    <div class="atm">
+                        <img src="img/bill_acc.png" alt="">
+                    </div>
+                    <button class="btn btn-primary btn-block mt-3 change-btn">Сдача</button>
+                    <div class="change-box"></div>
+                    </div>
                 </div>
-                <div class="col-6"><!-- Баланс, АТМ, Сдача -->
-                    
-                </div>
+                
             </div>
         </div>
     </div>
