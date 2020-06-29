@@ -15,19 +15,19 @@
         <div class="row">
             <div class="col-6 coffee-list"><!-- Левая сторона -->
                 <div class="row flex-column justify-content-around">
-                    <div class="coffee-item">
+                    <div class="coffee-item" onclick="cookCoffee('Американо', 50)">
                         <img src="img/americano.png" alt="Американо">
                         <span>Американо - 50 руб.</span>
                     </div>
-                    <div class="coffee-item">
+                    <div class="coffee-item" onclick="cookCoffee('Капучино', 92)">
                         <img src="img/cappuccino.png" alt="Капучино">
                         <span>Капучино - 92 руб.</span>
                     </div>
-                    <div class="coffee-item">
+                    <div class="coffee-item" onclick="cookCoffee('Эспрессо', 66)">
                         <img src="img/espresso.png" alt="Эспрессо">
                         <span>Эспрессо - 66 руб.</span>
                     </div>
-                    <div class="coffee-item">
+                    <div class="coffee-item" onclick="cookCoffee('Латте', 128)">
                         <img src="img/latte.jpg" alt="Латте">
                         <span>Латте - 128 руб.</span>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="display">
                             <span class="display-text">Выберите кофе</span>
                             <div class="progress mt-2">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                             </div>
                         </div>
                         <div class="cup">
