@@ -15,19 +15,19 @@
         <div class="row">
             <div class="col-6 coffee-list"><!-- Левая сторона -->
                 <div class="row flex-column justify-content-around">
-                    <div class="coffee-item" onclick="cookCoffee('Американо', 50)">
+                    <div class="coffee-item" onclick="cookCoffee('Американо', 50, this)">
                         <img src="img/americano.png" alt="Американо">
                         <span>Американо - 50 руб.</span>
                     </div>
-                    <div class="coffee-item" onclick="cookCoffee('Капучино', 92)">
+                    <div class="coffee-item" onclick="cookCoffee('Капучино', 92, this)">
                         <img src="img/cappuccino.png" alt="Капучино">
                         <span>Капучино - 92 руб.</span>
                     </div>
-                    <div class="coffee-item" onclick="cookCoffee('Эспрессо', 66)">
+                    <div class="coffee-item" onclick="cookCoffee('Эспрессо', 66, this)">
                         <img src="img/espresso.png" alt="Эспрессо">
                         <span>Эспрессо - 66 руб.</span>
                     </div>
-                    <div class="coffee-item" onclick="cookCoffee('Латте', 128)">
+                    <div class="coffee-item" onclick="cookCoffee('Латте', 128, this)">
                         <img src="img/latte.jpg" alt="Латте">
                         <span>Латте - 128 руб.</span>
                     </div>
@@ -64,7 +64,12 @@
             </div>
         </div>
     </div>
-
+    <div class="money">
+        <img src="img/100rub.jpg" alt="">
+        <img src="img/500rub.jpg" alt="">
+        <img src="img/50rub.jpg" alt="">
+        
+    </div>
     <!-- Optional JavaScript -->
     <script src="main.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
