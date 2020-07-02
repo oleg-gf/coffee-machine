@@ -98,3 +98,75 @@ function changeProgress(percent, sec = 0) {
     progress.style.width = percent + "%";
     progress.style.transition = `width ${sec}s`;
 }
+
+//    Drag'n'drop
+let bills = document.querySelectorAll(".money img");
+
+
+
+
+
+
+for (let bill of bills) {
+    bill.onmousedown = dragMoney;
+    
+}
+function dragMoney(event) { // Все слушатели события возвращают в функцию первым параметром объект event
+    console.log("You buttoned on bill");
+    console.log([event.clientX, event.clientY]);
+    console.log(this.getBoundingClientRect());
+    event.preventDefault();
+    let bill = this;
+    let billCoords = bill.getBoundingClientRect();
+    let billWidth = billCoords.width;
+    let billHeight = billCoords.height;
+    bill.style.position = "absolute";
+    bill.style.transform = "rotate(90deg)";
+        bill.style.top = event.clientY - billWidth / 2 + "px";
+        bill.style.left = event.clientX - billHeight / 2 + "px";
+    
+    window.onmousemove = function(event) {
+        let billCoords = bill.getBoundingClientRect();
+        let billWidth = billCoords.width;
+        let billHeight = billCoords.height;
+
+        bill.style.top = event.clientY - billWidth / 2 + "px";
+        bill.style.left = event.clientX - billHeight / 2 + "px";
+        
+        
+        //console.log([event.clientX, event.clientY]);
+    };
+    
+    bill.onmouseup = function() {
+        inAtm(bill);
+        window.onmousemove = null;
+        bill.style.transform = "rotate(0deg)";
+    };
+}
+
+function inAtm(bill) {
+    console.log(bill);
+    let atm = document.querySelector(".atm img");
+
+    let atmCoords = atm.getBoundingClientRect();
+    let atmWidth = atmCoords.width;
+    let atmHeight = atmCoords.height;
+    let atmLeftX =  atmCoords.x;
+    let atmTopY =  atmCoords.y;
+    let atmRightX = atmLeftX + atmWidth;
+    let atmBottomY = atmTopY + atmHeight / 3.5;
+    
+    let billCoords = bill.getBoundingClientRect();
+    let billWidth = billCoords.width;
+    let billHeight = billCoords.height;
+    let billLeftX = billCoords.x;
+    let billRightX = billCoords.x + billCoords.width;
+    let billY = billCoords.y;
+    if (billLeftX > atmLeftX 
+        && billRightX < atmRightX 
+        && billY > atmTopY 
+        && billY < atmBottomY) 
+        {
+            bill.style.display = "none";
+    }
+}
