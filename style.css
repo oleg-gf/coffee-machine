@@ -46,11 +46,27 @@
 .rub { 
     font-family: "rouble"; 
 }
-
+.atm {
+    position: relative;
+}
+.cash-catcher {
+    position: absolute;
+    top: 16%;
+    left: 12%;
+    border: 2px solid red;
+    background: #fff;
+    width: 80%;
+    height: 100%;
+    overflow: hidden;
+}
 .atm img {
     width: 100%;
 }
+.change-btn {
+    font-size: 15px;
+}
 .change-box {
+    position: relative;
     background: grey;
     border: 2px solid black;
     min-height: 100px;

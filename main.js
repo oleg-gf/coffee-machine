@@ -1,5 +1,4 @@
 let balance = document.querySelector(".balance");
-let change = balance.value;
 let state = "waitig"; //"cooking", "ready"
 let cup = {
     elem: document.querySelector(".cup"),
@@ -36,7 +35,6 @@ function cookCoffee(name, price, elem) {
     }
     let buttonCup = elem.querySelector("img");
     let cupSrc = buttonCup.src;
-    console.log(cupSrc);
     if (balance.value >= price) {
         balance.value -= price;
         balance.style.backgroundColor = ""; // Вернуть белый фон
@@ -49,7 +47,7 @@ function cookCoffee(name, price, elem) {
         changeDisplayText("Недостаточно средств");
         balance.style.backgroundColor = "rgb(255, 50, 50)"; 
     }
-    console.log(name, price, balance.value);
+    
 }
 
 function changeDisplayText(text) {
@@ -102,19 +100,11 @@ function changeProgress(percent, sec = 0) {
 //    Drag'n'drop
 let bills = document.querySelectorAll(".money img");
 
-
-
-
-
-
 for (let bill of bills) {
     bill.onmousedown = dragMoney;
     
 }
 function dragMoney(event) { // Все слушатели события возвращают в функцию первым параметром объект event
-    console.log("You buttoned on bill");
-    console.log([event.clientX, event.clientY]);
-    console.log(this.getBoundingClientRect());
     event.preventDefault();
     let bill = this;
     let billCoords = bill.getBoundingClientRect();
@@ -138,14 +128,36 @@ function dragMoney(event) { // Все слушатели события возв
     };
     
     bill.onmouseup = function() {
-        inAtm(bill);
         window.onmousemove = null;
-        bill.style.transform = "rotate(0deg)";
+        if (inAtm(bill)) {
+            let cost = Number(bill.getAttribute("cost"));
+            console.log(balance.value, cost);
+            balance.value = +balance.value + cost;
+            eatBill(bill);
+            //bill.remove();
+        } else {
+            bill.style.transform = "rotate(0deg)";
+        }
+        
     };
 }
 
+function eatBill(bill) {
+    let cashCatcher = document.querySelector(".cash-catcher");
+    cashCatcher.append(bill);
+    bill.style.position = "";
+    bill.style.transform = "translateY(50%) rotate(90deg)";
+    setTimeout(function(){
+            bill.style.transform = "translateY(-1500%) rotate(90deg)";
+            
+    }, 500); 
+    setTimeout(function(){
+            
+            bill.remove();
+    }, 100); 
+}
+
 function inAtm(bill) {
-    console.log(bill);
     let atm = document.querySelector(".atm img");
 
     let atmCoords = atm.getBoundingClientRect();
@@ -167,6 +179,114 @@ function inAtm(bill) {
         && billY > atmTopY 
         && billY < atmBottomY) 
         {
-            bill.style.display = "none";
-    }
+            return true;
+    } else return false;
 }
+;
+//  Take change
+let changeBtn = document.querySelector(".change-btn");
+let changeBox = document.querySelector(".change-box");
+changeBtn.onclick = function() {
+    changeBtn.innerHTML += ` ${balance.value}<span class="rub">i</span>`;
+    takeChange();
+    
+    
+};
+
+function takeChange() {
+    if (balance.value >= 10) {
+        balance.value -= 10;
+        createCoin2("10");
+        setTimeout(function(){
+            takeChange();
+        }, 100); 
+    } else if (balance.value >= 5) {
+        balance.value -= 5;
+        createCoin2("5");
+        setTimeout(function(){
+            takeChange();
+        }, 100);
+    } else if (balance.value >= 2) {
+        balance.value -= 2;
+        createCoin2("2");
+        setTimeout(function(){
+            takeChange();
+        }, 100);
+    } else if (balance.value >= 1) {
+        balance.value -= 1;
+        createCoin2("1");
+        setTimeout(function(){
+            takeChange();
+        }, 100);
+    }  
+}
+
+function createCoin(nominal) {
+    let imageSrc = "";
+    switch (nominal) {
+        case "1":
+           imageSrc = "img/1rub.png";
+           break;
+        case "2":
+           imageSrc = "img/2rub.png";
+           break;
+        case "5":
+           imageSrc = "img/5rub.png";
+           break;
+        case "10":
+           imageSrc = "img/10rub.png";
+           break;
+    }
+    let changeBox = document.querySelector(".change-box");
+    changeBox.innerHTML += `<img src="${imageSrc}">`;
+}
+function createCoin2(nominal) {
+    let coin = {
+        1: "img/1rub.png",
+        2: "img/2rub.png",
+        5: "img/5rub.png",
+        10: "img/10rub.png"
+    }
+    let imageSrc = coin[nominal];
+    
+    let changeBoxCoords = changeBox.getBoundingClientRect();
+    let changeBoxWidth = changeBoxCoords.width;
+    let changeBoxHeight = changeBoxCoords.height;
+    console.log(changeBoxWidth, changeBoxHeight);
+    
+    let coinTag = document.createElement('img');
+    coinTag.src = coin[nominal];
+    coinTag.style.cursor = "pointer";
+    coinTag.style.userSelect = "none";
+    coinTag.style.width = "30px";
+    coinTag.style.position = "absolute";
+    coinTag.style.opacity = 0;
+    coinTag.style.transform = "translateY(-75%)";
+    coinTag.style.transition = "opacity .5s, transform .5s";
+    coinTag.style.top = getRandomArbitrary(0, changeBoxHeight - 34) + "px";
+    coinTag.style.left = getRandomArbitrary(0, changeBoxWidth - 34) + "px";
+    
+    setTimeout(function() {
+        coinTag.style.opacity = 1;
+         coinTag.style.transform = "translateY(0%)";
+    }, 10);
+    
+    changeBox.append(coinTag);
+    coinTag.onclick = function() {
+        changeBox.innerHTML = ``;
+        changeBtn.innerHTML = `Сдача`;
+    }
+    let coinDropSound = new Audio("sound/coinDrop.mp3");
+    coinDropSound.volume = 0.01;
+    coinDropSound.play();
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
+
+
+
+
